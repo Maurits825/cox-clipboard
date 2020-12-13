@@ -34,8 +34,12 @@ public class CoxClipboardPlugin extends Plugin
 		TEAM_SIZE,
 	}
 
+	public static final String P_POINTS_PATTERN = "$p_pts";
+	public static final String T_POINTS_PATTERN = "$t_pts";
+	public static final String KC_PATTERN = "$kc";
+	public static final String SIZE_PATTERN = "$size";
+
 	private Map<CoxInfo, Pattern> patterns = new HashMap<CoxInfo, Pattern>();
-	//private Map<CoxInfo, String> data = new HashMap<CoxInfo, String>();
 
 	public CoxClipboardPlugin()
 	{
@@ -58,10 +62,6 @@ public class CoxClipboardPlugin extends Plugin
 	@Subscribe
 	public void onGameStateChanged(GameStateChanged gameStateChanged)
 	{
-		if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
-		{
-			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Cox Clipboard says " + config.greeting(), null);
-		}
 	}
 
 	@Provides
@@ -72,10 +72,10 @@ public class CoxClipboardPlugin extends Plugin
 
 	private void initializePatternMap()
 	{
-		patterns.put(CoxInfo.PERSONAL_POINTS, Pattern.compile("\\$p_pts"));
-		patterns.put(CoxInfo.TOTAL_POINTS, Pattern.compile("\\$t_pts"));
-		patterns.put(CoxInfo.KILL_COUNT, Pattern.compile("\\$kc"));
-		patterns.put(CoxInfo.TEAM_SIZE, Pattern.compile("\\$size"));
+		patterns.put(CoxInfo.PERSONAL_POINTS, Pattern.compile("\\" + P_POINTS_PATTERN));
+		patterns.put(CoxInfo.TOTAL_POINTS, Pattern.compile("\\" + T_POINTS_PATTERN));
+		patterns.put(CoxInfo.KILL_COUNT, Pattern.compile("\\" + KC_PATTERN));
+		patterns.put(CoxInfo.TEAM_SIZE, Pattern.compile("\\" + SIZE_PATTERN));
 	}
 
 	public String buildClipboardString(String format, Map<CoxInfo, String> values)

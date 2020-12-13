@@ -8,22 +8,17 @@ import net.runelite.client.config.ConfigItem;
 public interface CoxClipboardConfig extends Config
 {
 	@ConfigItem(
-		keyName = "greeting",
-		name = "Welcome Greeting",
-		description = "The message to show to the user when they login"
-	)
-	default String greeting()
-	{
-		return "Hello";
-	}
-
-	@ConfigItem(
 			keyName = "infoFormat",
-			name = "name test",
-			description = "Type in the format of the info to clipboard"
+			name = "Clipboard format",
+			description = "Type in the format of the info to clipboard.<br>" +
+					"Available variables:<br>" +
+					CoxClipboardPlugin.T_POINTS_PATTERN + ": total points<br>" +
+					CoxClipboardPlugin.P_POINTS_PATTERN + ": personal points<br>" +
+					CoxClipboardPlugin.KC_PATTERN + ": kill count<br>" +
+					CoxClipboardPlugin.SIZE_PATTERN + ": team size"
 	)
 	default String infoFormat()
 	{
-		return "$pts";
+		return CoxClipboardPlugin.P_POINTS_PATTERN;
 	}
 }
