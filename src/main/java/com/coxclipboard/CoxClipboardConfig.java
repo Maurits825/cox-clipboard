@@ -16,4 +16,14 @@ public interface CoxClipboardConfig extends Config
 	{
 		return "Hello";
 	}
+
+	@ConfigItem(
+			keyName = "infoFormat",
+			name = "name test",
+			description = "Type in the format of the info to clipboard"
+	)
+	default String infoFormat()
+	{
+		return "$pts";
+	}
 }

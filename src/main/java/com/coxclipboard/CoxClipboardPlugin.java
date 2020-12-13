@@ -1,6 +1,9 @@
 package com.coxclipboard;
 
 import com.google.inject.Provides;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
@@ -24,10 +27,26 @@ public class CoxClipboardPlugin extends Plugin
 	@Inject
 	private CoxClipboardConfig config;
 
+	public enum CoxInfo
+	{
+		PERSONAL_POINTS, TOTAL_POINTS,
+		KILL_COUNT,
+		TEAM_SIZE,
+	}
+
+	private Map<CoxInfo, Pattern> patterns = new HashMap<CoxInfo, Pattern>();
+	//private Map<CoxInfo, String> data = new HashMap<CoxInfo, String>();
+
+	public CoxClipboardPlugin()
+	{
+		initializePatternMap();
+	}
+
 	@Override
 	protected void startUp() throws Exception
 	{
 		log.info("Cox Clipboard started!");
+		initializePatternMap();
 	}
 
 	@Override
@@ -49,5 +68,24 @@ public class CoxClipboardPlugin extends Plugin
 	CoxClipboardConfig provideConfig(ConfigManager configManager)
 	{
 		return configManager.getConfig(CoxClipboardConfig.class);
+	}
+
+	private void initializePatternMap()
+	{
+		patterns.put(CoxInfo.PERSONAL_POINTS, Pattern.compile("\\$p_pts"));
+		patterns.put(CoxInfo.TOTAL_POINTS, Pattern.compile("\\$t_pts"));
+		patterns.put(CoxInfo.KILL_COUNT, Pattern.compile("\\$kc"));
+		patterns.put(CoxInfo.TEAM_SIZE, Pattern.compile("\\$size"));
+	}
+
+	public String buildClipboardString(String format, Map<CoxInfo, String> values)
+	{
+		String finalStr = format;
+		for (CoxInfo coxInfo : CoxInfo.values())
+		{
+			finalStr = patterns.get(coxInfo).matcher(finalStr).replaceAll(values.get(coxInfo));
+		}
+
+		return finalStr;
 	}
 }

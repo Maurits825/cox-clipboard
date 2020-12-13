@@ -3,7 +3,7 @@ package com.coxclipboard;
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
-public class CoxClipboardPluginTest
+public class RunClientAndPluginTest
 {
 	public static void main(String[] args) throws Exception
 	{
