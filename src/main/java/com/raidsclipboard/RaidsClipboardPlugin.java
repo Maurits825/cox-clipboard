@@ -1,4 +1,4 @@
-package com.coxclipboard;
+package com.raidsclipboard;
 
 import com.google.inject.Provides;
 import java.awt.Toolkit;
@@ -15,7 +15,6 @@ import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.Varbits;
 import net.runelite.api.events.ChatMessage;
-import net.runelite.client.chat.ChatColorType;
 import net.runelite.client.chat.ChatMessageBuilder;
 import net.runelite.client.chat.QueuedMessage;
 import net.runelite.client.config.ConfigManager;
@@ -27,16 +26,16 @@ import net.runelite.client.chat.ChatMessageManager;
 
 @Slf4j
 @PluginDescriptor(
-	name = "Cox Clipboard",
-	description = "Copies CoX points info to clipboard"
+	name = "Raids Clipboard",
+	description = "Copies raids info such as kc, points & deaths to clipboard"
 )
-public class CoxClipboardPlugin extends Plugin
+public class RaidsClipboardPlugin extends Plugin
 {
 	@Inject
 	private Client client;
 
 	@Inject
-	private CoxClipboardConfig config;
+	private RaidsClipboardConfig config;
 
 	@Inject
 	private ChatMessageManager chatMessageManager;
@@ -83,7 +82,7 @@ public class CoxClipboardPlugin extends Plugin
 	private int tobVarState = 0;
 	private int tobCurrentDeaths = 0;
 
-	public CoxClipboardPlugin()
+	public RaidsClipboardPlugin()
 	{
 		initializePatternMap();
 	}
@@ -102,9 +101,9 @@ public class CoxClipboardPlugin extends Plugin
 	}
 
 	@Provides
-	CoxClipboardConfig provideConfig(ConfigManager configManager)
+	RaidsClipboardConfig provideConfig(ConfigManager configManager)
 	{
-		return configManager.getConfig(CoxClipboardConfig.class);
+		return configManager.getConfig(RaidsClipboardConfig.class);
 	}
 
 	@Subscribe

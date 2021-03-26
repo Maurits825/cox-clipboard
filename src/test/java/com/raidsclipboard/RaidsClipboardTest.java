@@ -1,4 +1,4 @@
-package com.coxclipboard;
+package com.raidsclipboard;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CoxClipboardTest extends TestCase
+public class RaidsClipboardTest extends TestCase
 {
     @Mock
     @Bind
@@ -39,14 +39,14 @@ public class CoxClipboardTest extends TestCase
 
     @Mock
     @Bind
-    private CoxClipboardConfig coxClipboardConfig;
+    private RaidsClipboardConfig raidsClipboardConfig;
 
     @Mock
     @Bind
     private ChatMessageManager chatMessageManager;
 
     @Inject
-    private CoxClipboardPlugin coxClipboardPlugin;
+    private RaidsClipboardPlugin raidsClipboardPlugin;
 
     @Before
     public void setUp()
@@ -57,50 +57,50 @@ public class CoxClipboardTest extends TestCase
     @Test
     public void TestBuildCoxClipboardString()
     {
-        Map<CoxClipboardPlugin.CoxInfo, String> data = new HashMap<>();
+        Map<RaidsClipboardPlugin.CoxInfo, String> data = new HashMap<>();
 
-        String format = CoxClipboardPlugin.KC_PATTERN + " " + CoxClipboardPlugin.P_POINTS_PATTERN;
+        String format = RaidsClipboardPlugin.KC_PATTERN + " " + RaidsClipboardPlugin.P_POINTS_PATTERN;
         String kc = "500";
         String pts = "35000";
-        data.put(CoxClipboardPlugin.CoxInfo.KILL_COUNT, kc);
-        data.put(CoxClipboardPlugin.CoxInfo.PERSONAL_POINTS, pts);
+        data.put(RaidsClipboardPlugin.CoxInfo.KILL_COUNT, kc);
+        data.put(RaidsClipboardPlugin.CoxInfo.PERSONAL_POINTS, pts);
 
-        String clipBoard = coxClipboardPlugin.buildCoxClipboardString(format, data);
+        String clipBoard = raidsClipboardPlugin.buildCoxClipboardString(format, data);
         assertEquals(kc + " " + pts, clipBoard);
 
-        format = "kc: " + CoxClipboardPlugin.KC_PATTERN +
-                " total points: " + CoxClipboardPlugin.T_POINTS_PATTERN +
-                " team size: " + CoxClipboardPlugin.SIZE_PATTERN;
+        format = "kc: " + RaidsClipboardPlugin.KC_PATTERN +
+                " total points: " + RaidsClipboardPlugin.T_POINTS_PATTERN +
+                " team size: " + RaidsClipboardPlugin.SIZE_PATTERN;
         kc = "3";
         pts = "76543";
         String teamSize = "4";
-        data.put(CoxClipboardPlugin.CoxInfo.KILL_COUNT, kc);
-        data.put(CoxClipboardPlugin.CoxInfo.TOTAL_POINTS, pts);
-        data.put(CoxClipboardPlugin.CoxInfo.TEAM_SIZE, teamSize);
+        data.put(RaidsClipboardPlugin.CoxInfo.KILL_COUNT, kc);
+        data.put(RaidsClipboardPlugin.CoxInfo.TOTAL_POINTS, pts);
+        data.put(RaidsClipboardPlugin.CoxInfo.TEAM_SIZE, teamSize);
 
-        clipBoard = coxClipboardPlugin.buildCoxClipboardString(format, data);
+        clipBoard = raidsClipboardPlugin.buildCoxClipboardString(format, data);
         assertEquals("kc: " + kc + " total points: " + pts + " team size: " + teamSize, clipBoard);
     }
 
     @Test
     public void TestBuildTobClipboardString()
     {
-        Map<CoxClipboardPlugin.TobInfo, String> data = new HashMap<>();
-        String format = "kc: " + CoxClipboardPlugin.KC_PATTERN + ", " +
-                "deaths: " + CoxClipboardPlugin.DEATHS_PATTERN + ", " +
-                "size: " + CoxClipboardPlugin.SIZE_PATTERN + ", " +
-                "reward: " + CoxClipboardPlugin.REWARD_PATTERN;
+        Map<RaidsClipboardPlugin.TobInfo, String> data = new HashMap<>();
+        String format = "kc: " + RaidsClipboardPlugin.KC_PATTERN + ", " +
+                "deaths: " + RaidsClipboardPlugin.DEATHS_PATTERN + ", " +
+                "size: " + RaidsClipboardPlugin.SIZE_PATTERN + ", " +
+                "reward: " + RaidsClipboardPlugin.REWARD_PATTERN;
 
         String kc = "50";
         String deaths = "1";
         String size = "3";
         String reward = "540,300";
-        data.put(CoxClipboardPlugin.TobInfo.KILL_COUNT, kc);
-        data.put(CoxClipboardPlugin.TobInfo.DEATHS, deaths);
-        data.put(CoxClipboardPlugin.TobInfo.TEAM_SIZE, size);
-        data.put(CoxClipboardPlugin.TobInfo.REWARD, reward);
+        data.put(RaidsClipboardPlugin.TobInfo.KILL_COUNT, kc);
+        data.put(RaidsClipboardPlugin.TobInfo.DEATHS, deaths);
+        data.put(RaidsClipboardPlugin.TobInfo.TEAM_SIZE, size);
+        data.put(RaidsClipboardPlugin.TobInfo.REWARD, reward);
 
-        String clipBoard = coxClipboardPlugin.buildTobClipboardString(format, data);
+        String clipBoard = raidsClipboardPlugin.buildTobClipboardString(format, data);
         assertEquals("kc: " + kc + ", " +
                 "deaths: " + deaths + ", " +
                 "size: " + size + ", " +
@@ -110,17 +110,17 @@ public class CoxClipboardTest extends TestCase
     @Test
     public void TestCopyCoxInfoToClipboard()
     {
-        Map<CoxClipboardPlugin.CoxInfo, String> data = new HashMap<>();
+        Map<RaidsClipboardPlugin.CoxInfo, String> data = new HashMap<>();
 
-        String format = CoxClipboardPlugin.KC_PATTERN + " " + CoxClipboardPlugin.P_POINTS_PATTERN;
+        String format = RaidsClipboardPlugin.KC_PATTERN + " " + RaidsClipboardPlugin.P_POINTS_PATTERN;
         String kc = "500";
         String pts = "35000";
-        data.put(CoxClipboardPlugin.CoxInfo.KILL_COUNT, kc);
-        data.put(CoxClipboardPlugin.CoxInfo.PERSONAL_POINTS, pts);
+        data.put(RaidsClipboardPlugin.CoxInfo.KILL_COUNT, kc);
+        data.put(RaidsClipboardPlugin.CoxInfo.PERSONAL_POINTS, pts);
 
-        when(coxClipboardConfig.coxInfoFormat()).thenReturn(format);
+        when(raidsClipboardConfig.coxInfoFormat()).thenReturn(format);
 
-        coxClipboardPlugin.copyCoxInfoToClipboard(data);
+        raidsClipboardPlugin.copyCoxInfoToClipboard(data);
 
         String clipboardString = getClipboardContent();
 
@@ -130,17 +130,17 @@ public class CoxClipboardTest extends TestCase
     @Test
     public void TestCopyTobInfoToClipboard()
     {
-        Map<CoxClipboardPlugin.TobInfo, String> data = new HashMap<>();
+        Map<RaidsClipboardPlugin.TobInfo, String> data = new HashMap<>();
 
-        String format = CoxClipboardPlugin.KC_PATTERN + ", " + CoxClipboardPlugin.DEATHS_PATTERN;
+        String format = RaidsClipboardPlugin.KC_PATTERN + ", " + RaidsClipboardPlugin.DEATHS_PATTERN;
         String kc = "500";
         String deaths = "5";
-        data.put(CoxClipboardPlugin.TobInfo.KILL_COUNT, kc);
-        data.put(CoxClipboardPlugin.TobInfo.DEATHS, deaths);
+        data.put(RaidsClipboardPlugin.TobInfo.KILL_COUNT, kc);
+        data.put(RaidsClipboardPlugin.TobInfo.DEATHS, deaths);
 
-        when(coxClipboardConfig.tobInfoFormat()).thenReturn(format);
+        when(raidsClipboardConfig.tobInfoFormat()).thenReturn(format);
 
-        coxClipboardPlugin.copyTobInfoToClipboard(data);
+        raidsClipboardPlugin.copyTobInfoToClipboard(data);
 
         String clipboardString = getClipboardContent();
 
@@ -153,26 +153,26 @@ public class CoxClipboardTest extends TestCase
         when(client.getGameState()).thenReturn(GameState.LOGGED_IN);
         when(client.getVar(Varbits.IN_RAID)).thenReturn(1);
 
-        String format = "kc: " + CoxClipboardPlugin.KC_PATTERN +
-                " total points: " + CoxClipboardPlugin.T_POINTS_PATTERN +
-                " personal points: " + CoxClipboardPlugin.P_POINTS_PATTERN +
-                " team size: " + CoxClipboardPlugin.SIZE_PATTERN;
+        String format = "kc: " + RaidsClipboardPlugin.KC_PATTERN +
+                " total points: " + RaidsClipboardPlugin.T_POINTS_PATTERN +
+                " personal points: " + RaidsClipboardPlugin.P_POINTS_PATTERN +
+                " team size: " + RaidsClipboardPlugin.SIZE_PATTERN;
 
         String kc = "73";
         int totalPts = 82000;
         int personalPts = 35000;
         int teamSize = 5;
 
-        when(coxClipboardConfig.coxInfoFormat()).thenReturn(format);
+        when(raidsClipboardConfig.coxInfoFormat()).thenReturn(format);
         when(client.getVar(Varbits.TOTAL_POINTS)).thenReturn(totalPts);
         when(client.getVar(Varbits.PERSONAL_POINTS)).thenReturn(personalPts);
         when(client.getVar(Varbits.RAID_PARTY_SIZE)).thenReturn(teamSize);
 
         ChatMessage chatMessage = new ChatMessage(null, FRIENDSCHATNOTIFICATION, "", "<col=ef20ff>Congratulations - your raid is complete!</col><br>Team size: <col=ff0000>24+ players</col> Duration:</col> <col=ff0000>37:04</col> (new personal best)</col>>", null, 0);
-        coxClipboardPlugin.onChatMessage(chatMessage);
+        raidsClipboardPlugin.onChatMessage(chatMessage);
 
         chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "Your completed Chambers of Xeric count is: <col=ff0000>" + kc + "</col>.", null, 0);
-        coxClipboardPlugin.onChatMessage(chatMessage);
+        raidsClipboardPlugin.onChatMessage(chatMessage);
 
         String clipboardString = getClipboardContent();
 
@@ -188,34 +188,34 @@ public class CoxClipboardTest extends TestCase
         when(client.getVar(Varbits.THEATRE_OF_BLOOD)).thenReturn(2);
 
         Map<Integer, Object> varcmap = new HashMap<>();
-        varcmap.put(CoxClipboardPlugin.TOB_RAIDERS_VARP, "TobPro");
-        varcmap.put(CoxClipboardPlugin.TOB_RAIDERS_VARP + 1, "TobFeeder");
+        varcmap.put(RaidsClipboardPlugin.TOB_RAIDERS_VARP, "TobPro");
+        varcmap.put(RaidsClipboardPlugin.TOB_RAIDERS_VARP + 1, "TobFeeder");
 
         when(client.getVarcMap()).thenReturn(varcmap);
 
-        String format = "kc: " + CoxClipboardPlugin.KC_PATTERN +
-                " deaths: " + CoxClipboardPlugin.DEATHS_PATTERN +
-                " size: " + CoxClipboardPlugin.SIZE_PATTERN +
-                " reward: " + CoxClipboardPlugin.REWARD_PATTERN;
+        String format = "kc: " + RaidsClipboardPlugin.KC_PATTERN +
+                " deaths: " + RaidsClipboardPlugin.DEATHS_PATTERN +
+                " size: " + RaidsClipboardPlugin.SIZE_PATTERN +
+                " reward: " + RaidsClipboardPlugin.REWARD_PATTERN;
 
         String kc = "73";
         String deaths = "2";
         String size = "2";
         String reward = "450,230";
 
-        when(coxClipboardConfig.tobInfoFormat()).thenReturn(format);
+        when(raidsClipboardConfig.tobInfoFormat()).thenReturn(format);
 
         ChatMessage chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "<col=ff0000>TobFeeder</col> has died. Death count: <col=ff0000>1</col>.", null, 0);
-        coxClipboardPlugin.onChatMessage(chatMessage);
+        raidsClipboardPlugin.onChatMessage(chatMessage);
 
         chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "You have died. Death count: 2.", null, 0);
-        coxClipboardPlugin.onChatMessage(chatMessage);
+        raidsClipboardPlugin.onChatMessage(chatMessage);
 
         chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "Your completed Theatre of Blood count is: <col=ff0000>" + kc + "</col>.", null, 0);
-        coxClipboardPlugin.onChatMessage(chatMessage);
+        raidsClipboardPlugin.onChatMessage(chatMessage);
 
         chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "Your loot is worth around <col=ff0000>" + reward + "</col> coins.", null, 0);
-        coxClipboardPlugin.onChatMessage(chatMessage);
+        raidsClipboardPlugin.onChatMessage(chatMessage);
 
         String clipboardString = getClipboardContent();
 
@@ -223,19 +223,19 @@ public class CoxClipboardTest extends TestCase
                         " size: " + size + " reward: " + reward,
                 clipboardString);
 
-        format = "kc: " + CoxClipboardPlugin.KC_PATTERN +
-                " deaths: " + CoxClipboardPlugin.DEATHS_PATTERN;
+        format = "kc: " + RaidsClipboardPlugin.KC_PATTERN +
+                " deaths: " + RaidsClipboardPlugin.DEATHS_PATTERN;
 
-        when(coxClipboardConfig.tobInfoFormat()).thenReturn(format);
+        when(raidsClipboardConfig.tobInfoFormat()).thenReturn(format);
 
         kc = "100";
         deaths = "1";
 
         chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "<col=ff0000>TobFeeder</col> has died. Death count: <col=ff0000>1</col>.", null, 0);
-        coxClipboardPlugin.onChatMessage(chatMessage);
+        raidsClipboardPlugin.onChatMessage(chatMessage);
 
         chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "Your completed Theatre of Blood count is: <col=ff0000>" + kc + "</col>.", null, 0);
-        coxClipboardPlugin.onChatMessage(chatMessage);
+        raidsClipboardPlugin.onChatMessage(chatMessage);
 
         clipboardString = getClipboardContent();
 
@@ -246,7 +246,7 @@ public class CoxClipboardTest extends TestCase
     public void TestShowClipboardTextGameMessage()
     {
         String clipboard = "kc: 100, deaths: 5";
-        coxClipboardPlugin.showClipboardTextGameMessage(clipboard);
+        raidsClipboardPlugin.showClipboardTextGameMessage(clipboard);
         ArgumentCaptor<QueuedMessage> captor = ArgumentCaptor.forClass(QueuedMessage.class);
         verify(chatMessageManager).queue(captor.capture());
 
