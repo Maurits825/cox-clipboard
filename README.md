@@ -1,5 +1,5 @@
 # Raids Clipboard
-Copies raids info such as kc, points & deaths to clipboard, now works in CoX and ToB!
+Copies raids info such as kc, points & deaths to the clipboard, now works in CoX and ToB!
 
 # How to use
 The available variables for CoX are:
