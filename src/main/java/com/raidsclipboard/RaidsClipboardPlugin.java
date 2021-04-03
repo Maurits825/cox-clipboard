@@ -23,6 +23,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.util.Text;
 import net.runelite.client.chat.ChatMessageManager;
+import net.runelite.api.events.VarbitChanged;
 
 @Slf4j
 @PluginDescriptor(
@@ -72,15 +73,15 @@ public class RaidsClipboardPlugin extends Plugin
 	private final Map<TobInfo, String> tobRaidData = new HashMap<>();
 
 	private static final String COX_COMPLETE_MESSAGE = "Congratulations - your raid is complete!";
-	private static final Pattern RAIDS_KC_PATTERN = Pattern.compile("Your completed (.+) count is: <col=ff0000>(\\d+)</col>\\.");
+	private static final Pattern RAIDS_KC_PATTERN = Pattern.compile("Your completed (.+) count is: (\\d+)\\.");
 
 	private static final Pattern RAIDS_REWARD_PATTERN = Pattern.compile("Your loot is worth around (.*) coins\\.");
 
 	public static final Pattern DEATH_SELF = Pattern.compile("You have died. Death count: \\d+\\.");
 	public static final Pattern DEATH_OTHER = Pattern.compile(".* has died. Death count: \\d+\\.");
 
-	private int tobVarState = 0;
 	private int tobCurrentDeaths = 0;
+	private int currentTobState = 0;
 
 	public RaidsClipboardPlugin()
 	{
@@ -90,14 +91,12 @@ public class RaidsClipboardPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		log.info("Cox Clipboard started!");
 		initializePatternMap();
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
-		log.info("Cox Clipboard stopped!");
 	}
 
 	@Provides
@@ -112,7 +111,7 @@ public class RaidsClipboardPlugin extends Plugin
 		if (isInCox() && (event.getType() == ChatMessageType.FRIENDSCHATNOTIFICATION || event.getType() == ChatMessageType.GAMEMESSAGE))
 		{
 			String messageRaw = event.getMessage();
-			String message = Text.removeTags(messageRaw);
+			String message = Text.sanitize(Text.removeTags(messageRaw));
 			if (message.startsWith(COX_COMPLETE_MESSAGE))
 			{
 				int totalPoints = client.getVar(Varbits.TOTAL_POINTS);
@@ -125,27 +124,27 @@ public class RaidsClipboardPlugin extends Plugin
 				return;
 			}
 
-			Matcher matcher = RAIDS_KC_PATTERN.matcher(messageRaw);
+			Matcher matcher = RAIDS_KC_PATTERN.matcher(message);
 			if (matcher.find())
 			{
 				coxRaidData.put(CoxInfo.KILL_COUNT, matcher.group(2));
 				copyCoxInfoToClipboard(coxRaidData);
 			}
 		}
-		else if (isInTob() && (event.getType() == ChatMessageType.GAMEMESSAGE))
+		else if (isInTob() && (event.getType() == ChatMessageType.FRIENDSCHATNOTIFICATION || event.getType() == ChatMessageType.GAMEMESSAGE))
 		{
 			String messageRaw = event.getMessage();
-			String msg = Text.sanitize(Text.removeTags(messageRaw));
+			String message = Text.sanitize(Text.removeTags(messageRaw));
 
-			Matcher self = DEATH_SELF.matcher(msg);
-			Matcher other = DEATH_OTHER.matcher(msg);
+			Matcher self = DEATH_SELF.matcher(message);
+			Matcher other = DEATH_OTHER.matcher(message);
 			if (self.matches() || other.matches())
 			{
 				tobCurrentDeaths++;
 				return;
 			}
 
-			Matcher matcherKc = RAIDS_KC_PATTERN.matcher(messageRaw);
+			Matcher matcherKc = RAIDS_KC_PATTERN.matcher(message);
 			if (matcherKc.find())
 			{
 				tobRaidData.put(TobInfo.KILL_COUNT, matcherKc.group(2));
@@ -161,12 +160,27 @@ public class RaidsClipboardPlugin extends Plugin
 				return;
 			}
 
-			Matcher matcherRewards = RAIDS_REWARD_PATTERN.matcher(msg);
+			Matcher matcherRewards = RAIDS_REWARD_PATTERN.matcher(message);
 			if (matcherRewards.find())
 			{
 				tobRaidData.put(TobInfo.REWARD, matcherRewards.group(1));
 				copyTobInfoToClipboard(tobRaidData);
+				tobCurrentDeaths = 0;
 			}
+		}
+	}
+
+	@Subscribe
+	public void onVarbitChanged(VarbitChanged event)
+	{
+		int nextState = client.getVar(Varbits.THEATRE_OF_BLOOD);
+		if (currentTobState != nextState)
+		{
+			if (nextState == 2)
+			{
+				tobCurrentDeaths = 0;
+			}
+			currentTobState = nextState;
 		}
 	}
 

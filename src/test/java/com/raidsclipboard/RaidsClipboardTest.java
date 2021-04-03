@@ -171,7 +171,7 @@ public class RaidsClipboardTest extends TestCase
         ChatMessage chatMessage = new ChatMessage(null, FRIENDSCHATNOTIFICATION, "", "<col=ef20ff>Congratulations - your raid is complete!</col><br>Team size: <col=ff0000>24+ players</col> Duration:</col> <col=ff0000>37:04</col> (new personal best)</col>>", null, 0);
         raidsClipboardPlugin.onChatMessage(chatMessage);
 
-        chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "Your completed Chambers of Xeric count is: <col=ff0000>" + kc + "</col>.", null, 0);
+        chatMessage = new ChatMessage(null, FRIENDSCHATNOTIFICATION, "", "Your completed Chambers of Xeric count is: <col=ff0000>" + kc + "</col>.", null, 0);
         raidsClipboardPlugin.onChatMessage(chatMessage);
 
         String clipboardString = getClipboardContent();
@@ -211,7 +211,7 @@ public class RaidsClipboardTest extends TestCase
         chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "You have died. Death count: 2.", null, 0);
         raidsClipboardPlugin.onChatMessage(chatMessage);
 
-        chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "Your completed Theatre of Blood count is: <col=ff0000>" + kc + "</col>.", null, 0);
+        chatMessage = new ChatMessage(null, FRIENDSCHATNOTIFICATION, "", "Your completed Theatre of Blood count is: <col=ff0000>" + kc + "</col>.", null, 0);
         raidsClipboardPlugin.onChatMessage(chatMessage);
 
         chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "Your loot is worth around <col=ff0000>" + reward + "</col> coins.", null, 0);
