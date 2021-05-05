@@ -163,7 +163,7 @@ public class RaidsClipboardPlugin extends Plugin
 			Matcher matcherRewards = RAIDS_REWARD_PATTERN.matcher(message);
 			if (matcherRewards.find())
 			{
-				tobRaidData.put(TobInfo.REWARD, matcherRewards.group(1));
+				tobRaidData.put(TobInfo.REWARD, matcherRewards.group(1).replaceAll(",", ""));
 				copyTobInfoToClipboard(tobRaidData);
 				tobCurrentDeaths = 0;
 			}

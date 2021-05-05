@@ -202,6 +202,7 @@ public class RaidsClipboardTest extends TestCase
         String deaths = "2";
         String size = "2";
         String reward = "450,230";
+        String rewardNoComma = reward.replaceAll(",", "");
 
         when(raidsClipboardConfig.tobInfoFormat()).thenReturn(format);
 
@@ -220,7 +221,7 @@ public class RaidsClipboardTest extends TestCase
         String clipboardString = getClipboardContent();
 
         assertEquals("kc: " + kc + " deaths: " + deaths +
-                        " size: " + size + " reward: " + reward,
+                        " size: " + size + " reward: " + rewardNoComma,
                 clipboardString);
 
         format = "kc: " + RaidsClipboardPlugin.KC_PATTERN +
