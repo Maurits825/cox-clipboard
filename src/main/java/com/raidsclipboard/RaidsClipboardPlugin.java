@@ -78,7 +78,7 @@ public class RaidsClipboardPlugin extends Plugin
 	private static final Pattern RAIDS_REWARD_PATTERN = Pattern.compile("Your loot is worth around (.*) coins\\.");
 
 	public static final Pattern DEATH_SELF = Pattern.compile("You have died. Death count: \\d+\\.");
-	public static final Pattern DEATH_OTHER = Pattern.compile(".* has died. Death count: \\d+\\.");
+	public static final Pattern DEATH_OTHER = Pattern.compile(".* has (?:died|logged out). Death count: \\d+\\.");
 
 	private int tobCurrentDeaths = 0;
 	private int currentTobState = 0;

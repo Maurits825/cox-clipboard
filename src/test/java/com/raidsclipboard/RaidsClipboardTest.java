@@ -199,7 +199,7 @@ public class RaidsClipboardTest extends TestCase
                 " reward: " + RaidsClipboardPlugin.REWARD_PATTERN;
 
         String kc = "73";
-        String deaths = "2";
+        String deaths = "3";
         String size = "2";
         String reward = "450,230";
         String rewardNoComma = reward.replaceAll(",", "");
@@ -209,7 +209,10 @@ public class RaidsClipboardTest extends TestCase
         ChatMessage chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "<col=ff0000>TobFeeder</col> has died. Death count: <col=ff0000>1</col>.", null, 0);
         raidsClipboardPlugin.onChatMessage(chatMessage);
 
-        chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "You have died. Death count: 2.", null, 0);
+        chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "<col=ff0000>TobFeeder</col> has logged out. Death count: <col=ff0000>2</col>.", null, 0);
+        raidsClipboardPlugin.onChatMessage(chatMessage);
+
+        chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "You have died. Death count: 3.", null, 0);
         raidsClipboardPlugin.onChatMessage(chatMessage);
 
         chatMessage = new ChatMessage(null, FRIENDSCHATNOTIFICATION, "", "Your completed Theatre of Blood count is: <col=ff0000>" + kc + "</col>.", null, 0);
