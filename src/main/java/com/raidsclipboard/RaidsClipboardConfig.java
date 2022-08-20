@@ -1,5 +1,7 @@
 package com.raidsclipboard;
 
+import com.raidsclipboard.data.CoxData;
+import com.raidsclipboard.data.TobData;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
@@ -23,18 +25,18 @@ public interface RaidsClipboardConfig extends Config
 			name = "CoX clipboard format",
 			description = "Type in the format of the info to clipboard.<br>" +
 					"Available variables:<br>" +
-					RaidsClipboardPlugin.T_POINTS_PATTERN + ": total points<br>" +
-					RaidsClipboardPlugin.P_POINTS_PATTERN + ": personal points<br>" +
-					RaidsClipboardPlugin.KC_PATTERN + ": kill count<br>" +
-					RaidsClipboardPlugin.SIZE_PATTERN + ": team size"
+					"$t_pts: total points<br>" +
+					"$p_pts: personal points<br>" +
+					"$kc: kill count<br>" +
+					"$size: team size"
 	)
 
 	default String coxInfoFormat()
 	{
-		return RaidsClipboardPlugin.T_POINTS_PATTERN + ", " +
-				RaidsClipboardPlugin.P_POINTS_PATTERN + ", " +
-				RaidsClipboardPlugin.KC_PATTERN + ", " +
-				RaidsClipboardPlugin.SIZE_PATTERN + ", ";
+		return CoxData.TOTAL_POINTS + ", " +
+				CoxData.PERSONAL_POINTS + ", " +
+				CoxData.KILL_COUNT + ", " +
+				CoxData.TEAM_SIZE + ", ";
 	}
 
 	@ConfigItem(
@@ -42,16 +44,16 @@ public interface RaidsClipboardConfig extends Config
 			name = "ToB clipboard format",
 			description = "Type in the format of the info to clipboard.<br>" +
 					"Available variables:<br>" +
-					RaidsClipboardPlugin.DEATHS_PATTERN + ": total deaths<br>" +
-					RaidsClipboardPlugin.KC_PATTERN + ": kill count<br>" +
-					RaidsClipboardPlugin.SIZE_PATTERN + ": team size<br>" +
-					RaidsClipboardPlugin.REWARD_PATTERN + ": reward value"
+					"$deaths: total deaths<br>" +
+					"$kc: kill count<br>" +
+					"$size: team size<br>" +
+					"$reward: reward value"
 	)
 	default String tobInfoFormat()
 	{
-		return RaidsClipboardPlugin.DEATHS_PATTERN + ", " +
-				RaidsClipboardPlugin.KC_PATTERN + ", " +
-				RaidsClipboardPlugin.SIZE_PATTERN + ", " +
-				RaidsClipboardPlugin.REWARD_PATTERN + ", ";
+		return TobData.DEATHS + ", " +
+				TobData.KILL_COUNT + ", " +
+				TobData.TEAM_SIZE + ", " +
+				TobData.REWARD + ", ";
 	}
 }

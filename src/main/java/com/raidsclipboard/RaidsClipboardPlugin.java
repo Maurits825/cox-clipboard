@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
+
+import com.raidsclipboard.raids.Cox;
+import com.raidsclipboard.raids.Tob;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
@@ -18,6 +21,7 @@ import net.runelite.api.events.ChatMessage;
 import net.runelite.client.chat.ChatMessageBuilder;
 import net.runelite.client.chat.QueuedMessage;
 import net.runelite.client.config.ConfigManager;
+import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -40,6 +44,15 @@ public class RaidsClipboardPlugin extends Plugin
 
 	@Inject
 	private ChatMessageManager chatMessageManager;
+
+	@Inject
+	private EventBus eventBus;
+
+	@Inject
+	private Cox cox;
+
+	@Inject
+	private Tob tob;
 
 	public enum CoxInfo
 	{
@@ -92,11 +105,16 @@ public class RaidsClipboardPlugin extends Plugin
 	protected void startUp() throws Exception
 	{
 		initializePatternMap();
+
+		eventBus.register(cox);
+		eventBus.register(tob);
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
+		eventBus.unregister(cox);
+		eventBus.unregister(tob);
 	}
 
 	@Provides
