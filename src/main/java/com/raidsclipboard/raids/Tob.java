@@ -57,7 +57,7 @@ public class Tob extends Raid
                 raidData.put(TobData.DEATHS, String.valueOf(tobCurrentDeaths));
                 raidData.put(TobData.TEAM_SIZE, getTobTeamSize());
 
-                if (!config.tobInfoFormat().contains(TobData.REWARD.toString()))
+                if (!TobData.REWARD.getPattern().matcher(config.tobInfoFormat()).find())
                 {
                     handleRaidInfoToClipboard(config.tobInfoFormat());
                 }

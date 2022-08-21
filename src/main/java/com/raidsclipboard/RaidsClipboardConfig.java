@@ -1,7 +1,5 @@
 package com.raidsclipboard;
 
-import com.raidsclipboard.data.CoxData;
-import com.raidsclipboard.data.TobData;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
@@ -33,10 +31,7 @@ public interface RaidsClipboardConfig extends Config
 
 	default String coxInfoFormat()
 	{
-		return CoxData.TOTAL_POINTS + ", " +
-				CoxData.PERSONAL_POINTS + ", " +
-				CoxData.KILL_COUNT + ", " +
-				CoxData.TEAM_SIZE + ", ";
+		return "";
 	}
 
 	@ConfigItem(
@@ -51,9 +46,6 @@ public interface RaidsClipboardConfig extends Config
 	)
 	default String tobInfoFormat()
 	{
-		return TobData.DEATHS + ", " +
-				TobData.KILL_COUNT + ", " +
-				TobData.TEAM_SIZE + ", " +
-				TobData.REWARD + ", ";
+		return "";
 	}
 }
