@@ -48,4 +48,20 @@ public interface RaidsClipboardConfig extends Config
 	{
 		return "";
 	}
+
+	@ConfigItem(
+			keyName = "toaInfoFormat",
+			name = "ToA clipboard format",
+			description = "Type in the format of the info to clipboard.<br>" +
+					"Available variables:<br>" +
+					"$kc: kill count<br>" +
+					"$deaths: total deaths<br>" +
+					"$raid_lvl: raid level<br>" +
+					"$invo_count: invocation count<br>" +
+					"$size: team size<br>"
+	)
+	default String toaInfoFormat()
+	{
+		return "";
+	}
 }
