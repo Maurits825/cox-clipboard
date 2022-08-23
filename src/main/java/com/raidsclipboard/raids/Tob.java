@@ -1,6 +1,5 @@
 package com.raidsclipboard.raids;
 
-import com.raidsclipboard.RaidsClipboardConfig;
 import com.raidsclipboard.data.TobData;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.GameState;
@@ -10,7 +9,6 @@ import net.runelite.api.events.VarbitChanged;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.util.Text;
 
-import javax.inject.Inject;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,12 +26,6 @@ public class Tob extends Raid
 
     private int tobCurrentDeaths = 0;
     private int currentTobState = 0;
-
-    @Inject
-    protected Tob(RaidsClipboardConfig config)
-    {
-        super(config);
-    }
 
     @Subscribe
     public void onChatMessage(ChatMessage event)

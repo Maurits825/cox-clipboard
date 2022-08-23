@@ -1,6 +1,5 @@
 package com.raidsclipboard.raids;
 
-import com.raidsclipboard.RaidsClipboardConfig;
 import com.raidsclipboard.data.CoxData;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.GameState;
@@ -9,7 +8,6 @@ import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.util.Text;
 
-import javax.inject.Inject;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,12 +15,6 @@ public class Cox extends Raid
 {
     private static final String COMPLETED_MESSAGE = "Congratulations - your raid is complete!";
     private static final Pattern KC_PATTERN = Pattern.compile("Your completed (.+) count is: (\\d+)\\.");
-
-    @Inject
-    protected Cox(RaidsClipboardConfig config)
-    {
-        super(config);
-    }
 
     @Subscribe
     public void onChatMessage(ChatMessage event)

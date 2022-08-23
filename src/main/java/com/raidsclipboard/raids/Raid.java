@@ -9,14 +9,12 @@ import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.chat.QueuedMessage;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.util.HashMap;
 import java.util.Map;
 
-@Singleton
 public abstract class Raid
 {
     @Inject
@@ -25,15 +23,10 @@ public abstract class Raid
     @Inject
     protected ChatMessageManager chatMessageManager;
 
-    protected final RaidsClipboardConfig config;
+    @Inject
+    protected RaidsClipboardConfig config;
 
     protected final Map<RaidData, String> raidData = new HashMap<>();
-
-    @Inject
-    protected Raid(RaidsClipboardConfig config)
-    {
-        this.config = config;
-    }
 
     protected void handleRaidInfoToClipboard(String format)
     {
