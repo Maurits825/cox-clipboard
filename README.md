@@ -1,5 +1,5 @@
 # Raids Clipboard
-Copies raids info such as kc, points & deaths to the clipboard, now works in CoX and ToB!
+Copies raids info such as kc, points & deaths to the clipboard, now works in CoX, ToB & ToA!
 
 # Available Variables
 Chambers of Xeric:
