@@ -27,8 +27,9 @@ Tombs of Amascut:
 | --- | --- |
 | $kc | kill count  
 | $deaths | total deaths
-| $raid_lvl | raid level 
-| $invo_count | invocation count
+| $raid_lvl | raid level
+| $raid_type | raid type
+| $reward | reward value
 | $size | team size
 
 Any other characters or words can be included in the format, these will stay.

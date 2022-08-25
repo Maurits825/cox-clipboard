@@ -57,7 +57,8 @@ public interface RaidsClipboardConfig extends Config
 					"$kc: kill count<br>" +
 					"$deaths: total deaths<br>" +
 					"$raid_lvl: raid level<br>" +
-					"$invo_count: invocation count<br>" +
+					"$raid_type: raid type<br>" +
+					"$reward: reward value" +
 					"$size: team size<br>"
 	)
 	default String toaInfoFormat()

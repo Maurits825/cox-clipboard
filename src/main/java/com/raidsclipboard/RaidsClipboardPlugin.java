@@ -4,6 +4,7 @@ import com.google.inject.Provides;
 import javax.inject.Inject;
 
 import com.raidsclipboard.raids.Cox;
+import com.raidsclipboard.raids.Toa;
 import com.raidsclipboard.raids.Tob;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.config.ConfigManager;
@@ -30,11 +31,15 @@ public class RaidsClipboardPlugin extends Plugin
 	@Inject
 	private Tob tob;
 
+	@Inject
+	private Toa toa;
+
 	@Override
 	protected void startUp() throws Exception
 	{
 		eventBus.register(cox);
 		eventBus.register(tob);
+		eventBus.register(toa);
 	}
 
 	@Override
@@ -42,6 +47,7 @@ public class RaidsClipboardPlugin extends Plugin
 	{
 		eventBus.unregister(cox);
 		eventBus.unregister(tob);
+		eventBus.unregister(toa);
 	}
 
 	@Provides
