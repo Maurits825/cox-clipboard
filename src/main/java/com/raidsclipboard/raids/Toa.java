@@ -4,6 +4,7 @@ import com.raidsclipboard.data.ToaData;
 import lombok.RequiredArgsConstructor;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.events.ChatMessage;
+import net.runelite.api.widgets.Widget;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.util.Text;
 
@@ -32,12 +33,15 @@ public class Toa extends Raid
     private static final Pattern DEATH_SELF = Pattern.compile("You have died. Death count: \\d+\\.");
     private static final Pattern DEATH_OTHER = Pattern.compile(".* has (?:died|logged out). Death count: \\d+\\.");
 
+    private static final int WIDGET_PARENT_ID = 481;
+    private static final int WIDGET_CHILD_ID = 40;
+
     private int currentDeaths = 0;
 
     @Subscribe
     public void onChatMessage(ChatMessage event)
     {
-        if ((event.getType() == ChatMessageType.FRIENDSCHATNOTIFICATION || event.getType() == ChatMessageType.GAMEMESSAGE))
+        if (isInToa() && (event.getType() == ChatMessageType.FRIENDSCHATNOTIFICATION || event.getType() == ChatMessageType.GAMEMESSAGE))
         {
             String message = Text.sanitize(Text.removeTags(event.getMessage()));
 
@@ -93,5 +97,11 @@ public class Toa extends Raid
                 handleRaidInfoToClipboard(config.toaInfoFormat());
             }
         }
+    }
+
+    private boolean isInToa()
+    {
+        Widget w = client.getWidget(WIDGET_PARENT_ID, WIDGET_CHILD_ID);
+        return (w != null && !w.isHidden());
     }
 }

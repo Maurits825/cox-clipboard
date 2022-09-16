@@ -8,6 +8,7 @@ import com.raidsclipboard.raids.Toa;
 import junit.framework.TestCase;
 import net.runelite.api.Client;
 import net.runelite.api.events.ChatMessage;
+import net.runelite.api.widgets.Widget;
 import net.runelite.client.chat.ChatMessageManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +25,7 @@ import java.io.IOException;
 
 import static net.runelite.api.ChatMessageType.FRIENDSCHATNOTIFICATION;
 import static net.runelite.api.ChatMessageType.GAMEMESSAGE;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -77,6 +79,7 @@ public class ToaTest extends TestCase
         String raidType = "Entry Mode";
 
         when(raidsClipboardConfig.toaInfoFormat()).thenReturn(format);
+        when(client.getWidget(481, 40)).thenReturn(mock(Widget.class));
 
         ChatMessage chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "You enter the Tombs of Amascut " + raidType + "...", null, 0);
         toa.onChatMessage(chatMessage);
