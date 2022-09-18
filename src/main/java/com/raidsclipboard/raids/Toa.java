@@ -41,7 +41,7 @@ public class Toa extends Raid
     @Subscribe
     public void onChatMessage(ChatMessage event)
     {
-        if (isInToa() && (event.getType() == ChatMessageType.FRIENDSCHATNOTIFICATION || event.getType() == ChatMessageType.GAMEMESSAGE))
+        if (event.getType() == ChatMessageType.GAMEMESSAGE)
         {
             String message = Text.sanitize(Text.removeTags(event.getMessage()));
 
@@ -62,6 +62,11 @@ public class Toa extends Raid
                 currentDeaths = 0;
                 return;
             }
+        }
+
+        if (isInToa() && (event.getType() == ChatMessageType.FRIENDSCHATNOTIFICATION || event.getType() == ChatMessageType.GAMEMESSAGE))
+        {
+            String message = Text.sanitize(Text.removeTags(event.getMessage()));
 
             Matcher self = DEATH_SELF.matcher(message);
             Matcher other = DEATH_OTHER.matcher(message);
@@ -91,7 +96,7 @@ public class Toa extends Raid
             }
 
             Matcher matcherRewards = REWARD_PATTERN.matcher(message);
-            if (matcherRewards.find())
+            if (matcherRewards.find() && ToaData.REWARD.getPattern().matcher(config.toaInfoFormat()).find())
             {
                 raidData.put(ToaData.REWARD, matcherRewards.group(1).replaceAll(",", ""));
                 handleRaidInfoToClipboard(config.toaInfoFormat());

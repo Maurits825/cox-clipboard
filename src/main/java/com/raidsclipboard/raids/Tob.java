@@ -59,7 +59,7 @@ public class Tob extends Raid
             }
 
             Matcher matcherRewards = REWARD_PATTERN.matcher(message);
-            if (matcherRewards.find())
+            if (matcherRewards.find() && TobData.REWARD.getPattern().matcher(config.tobInfoFormat()).find())
             {
                 raidData.put(TobData.REWARD, matcherRewards.group(1).replaceAll(",", ""));
                 handleRaidInfoToClipboard(config.tobInfoFormat());
