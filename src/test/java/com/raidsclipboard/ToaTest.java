@@ -84,7 +84,7 @@ public class ToaTest extends TestCase
         ChatMessage chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "You enter the Tombs of Amascut " + raidType + "...", null, 0);
         toa.onChatMessage(chatMessage);
 
-        chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "<col=ff0000>Feeder</col> has died. Death count: <col=ff0000>1</col>.", null, 0);
+        chatMessage = new ChatMessage(null, GAMEMESSAGE, "", "<col=ff0000>Feeder</col> has died. Total deaths: <col=ff0000>1</col>.", null, 0);
         toa.onChatMessage(chatMessage);
 
         chatMessage = new ChatMessage(null, FRIENDSCHATNOTIFICATION, "", "Your completed Tombs of Amascut: " + raidType + " count is: <col=ff0000>" + kc + "</col>.", null, 0);

@@ -30,8 +30,8 @@ public class Toa extends Raid
     private static final Pattern ENTRY_PATTERN = Pattern.compile("You enter the Tombs of Amascut");
     private static final Pattern REWARD_PATTERN = Pattern.compile("Your loot is worth around (.*) coins\\.");
 
-    private static final Pattern DEATH_SELF = Pattern.compile("You have died. Death count: \\d+\\.");
-    private static final Pattern DEATH_OTHER = Pattern.compile(".* has (?:died|logged out). Death count: \\d+\\.");
+    private static final Pattern DEATH_SELF = Pattern.compile("You have died. Total deaths: \\d+\\.");
+    private static final Pattern DEATH_OTHER = Pattern.compile(".* has (?:died|logged out). Total deaths: \\d+\\.");
 
     private static final int WIDGET_PARENT_ID = 481;
     private static final int WIDGET_CHILD_ID = 40;
