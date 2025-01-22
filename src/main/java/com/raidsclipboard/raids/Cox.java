@@ -3,6 +3,7 @@ package com.raidsclipboard.raids;
 import com.raidsclipboard.data.CoxData;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.GameState;
+import net.runelite.api.VarPlayer;
 import net.runelite.api.Varbits;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
@@ -15,6 +16,7 @@ public class Cox extends Raid
 {
     private static final String COMPLETED_MESSAGE = "Congratulations - your raid is complete!";
     private static final Pattern KC_PATTERN = Pattern.compile("Your completed (.+) count is: (\\d+)\\.");
+    private static final int RAID_PARTY_SIZE = 5424;
 
     @Subscribe
     public void onChatMessage(ChatMessage event)
@@ -25,8 +27,8 @@ public class Cox extends Raid
             if (message.startsWith(COMPLETED_MESSAGE))
             {
                 int totalPoints = client.getVarbitValue(Varbits.TOTAL_POINTS);
-                int personalPoints = client.getVarbitValue(Varbits.PERSONAL_POINTS);
-                int teamSize = client.getVarbitValue(Varbits.RAID_PARTY_SIZE);
+                int personalPoints = client.getVarpValue(VarPlayer.RAIDS_PERSONAL_POINTS);
+                int teamSize = client.getVarbitValue(RAID_PARTY_SIZE);
 
                 raidData.put(CoxData.TOTAL_POINTS, String.valueOf(totalPoints));
                 raidData.put(CoxData.PERSONAL_POINTS, String.valueOf(personalPoints));

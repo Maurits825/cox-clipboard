@@ -8,6 +8,7 @@ import com.raidsclipboard.raids.Cox;
 import junit.framework.TestCase;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
+import net.runelite.api.VarPlayer;
 import net.runelite.api.Varbits;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.chat.ChatMessageManager;
@@ -30,6 +31,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CoxTest extends TestCase
 {
+    private static final int RAID_PARTY_SIZE = 5424;
     @Mock
     @Bind
     private Client client;
@@ -73,8 +75,8 @@ public class CoxTest extends TestCase
 
         when(raidsClipboardConfig.coxInfoFormat()).thenReturn(format);
         when(client.getVarbitValue(Varbits.TOTAL_POINTS)).thenReturn(totalPts);
-        when(client.getVarbitValue(Varbits.PERSONAL_POINTS)).thenReturn(personalPts);
-        when(client.getVarbitValue(Varbits.RAID_PARTY_SIZE)).thenReturn(teamSize);
+        when(client.getVarpValue(VarPlayer.RAIDS_PERSONAL_POINTS)).thenReturn(personalPts);
+        when(client.getVarbitValue(RAID_PARTY_SIZE)).thenReturn(teamSize);
 
         ChatMessage chatMessage = new ChatMessage(null, FRIENDSCHATNOTIFICATION, "", "<col=ef20ff>Congratulations - your raid is complete!</col><br>Team size: <col=ff0000>24+ players</col> Duration:</col> <col=ff0000>37:04</col> (new personal best)</col>>", null, 0);
         cox.onChatMessage(chatMessage);
